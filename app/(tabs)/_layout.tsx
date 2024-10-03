@@ -14,6 +14,15 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
       }}>
+        <Tabs.Screen
+        name="encrypt"
+        options={{
+          title: 'Encrypt',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'lock-open' : 'lock-open-outline'} color={color} />
+          ),
+        }}
+      />
       <Tabs.Screen
         name="index"
         options={{

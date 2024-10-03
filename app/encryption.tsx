@@ -1,10 +1,8 @@
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { useRouter } from "expo-router";
+import { Icon } from "@/components/Icon";
 
-export default function HomeScreen() {
-  const router = useRouter();
-
+export default function Encryption() {
   return (
     <View>
       <View style={styles.header}>
@@ -13,24 +11,24 @@ export default function HomeScreen() {
           source={require("@/assets/images/encryptix_logo.png")}
         />
       </View>
-      <View style={styles.mainContainer}>
+      <View style={styles.headerContainer}>
         <View>
-          <ThemedText type="title">
-            Welcome to <ThemedText type="subtitle">Encryptix</ThemedText>
-          </ThemedText>
-          <ThemedText style={{ marginTop: 8 }}>
-            Where the encryption becomes easy
-          </ThemedText>
+          <ThemedText type="title">Encryption</ThemedText>
         </View>
         <View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              router.navigate("/encryption");
+          <ThemedText
+            style={{
+              marginTop: 32,
+              textAlign: "left",
+              fontSize: 16,
+              fontFamily: "Montserrat_400Regular",
             }}
           >
-            <Text style={styles.buttonText}>Start Encrypting</Text>
-          </TouchableOpacity>
+            To start, first select the file you want to encrypt:
+          </ThemedText>
+          <View style={styles.fileInput}>
+            <Icon name="document-outline" />
+          </View>
         </View>
       </View>
     </View>
@@ -49,8 +47,12 @@ const styles = StyleSheet.create({
     left: 0,
     position: "absolute",
   },
-  mainContainer: {
+  headerContainer: {
     marginTop: 32,
+    paddingHorizontal: 32,
+  },
+  fileInput: {
+    backgroundColor: "#fff",
   },
   button: {
     backgroundColor: "#629B52",
