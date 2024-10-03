@@ -1,8 +1,10 @@
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Icon } from "@/components/Icon";
+import * as DocumentPicker from "expo-document-picker";
 
 export default function Encryption() {
+
   return (
     <View>
       <View style={styles.header}>
@@ -26,9 +28,27 @@ export default function Encryption() {
           >
             To start, first select the file you want to encrypt:
           </ThemedText>
-          <View style={styles.fileInput}>
+          <TouchableOpacity style={styles.fileInput} onPress={ async () => {
+            try {
+              let file = await DocumentPicker.getDocumentAsync()
+
+              console.log(file)
+
+            } catch (error) {
+              console.log(error)
+            }
+          }}>
             <Icon name="document-outline" />
-          </View>
+            <Text>{}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            
+          }}>
+            <Text>Check File</Text>
+          </TouchableOpacity>
+          {/* <View style={styles.fileInput}>
+            
+          </View> */}
         </View>
       </View>
     </View>
