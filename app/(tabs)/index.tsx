@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -25,8 +26,10 @@ export default function HomeScreen() {
         <View>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => {
-              router.navigate("/encryption");
+            onPress={async () => {
+              // router.navigate("/encryption");
+              const token = await AsyncStorage.getItem("accessToken");
+              console.log("token: " + token);
             }}
           >
             <Text style={styles.buttonText}>Start Encrypting</Text>

@@ -9,6 +9,9 @@ import {
 import { ThemedText } from "@/components/ThemedText";
 import { useRouter } from "expo-router";
 import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { logUser } from "./req/users";
 
 export default function Index() {
   const router = useRouter();
@@ -51,8 +54,18 @@ export default function Index() {
         </View>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
+          onPress={async () => {
             console.log(email, password);
+            const res = await logUser({ email, password });
+            if (res && res.accessToken) {
+              console.log("Login Successful");
+              
+              await AsyncStorage.setItem("accessToken", res.accessToken);
+              console.log("Token saved successfully!");
+              router.navigate('/(tabs)');
+            } else {
+              console.log("Login failed");
+            }
           }}
         >
           <Text style={styles.buttonText}>Log In</Text>
