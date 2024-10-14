@@ -20,3 +20,24 @@ export const logUser = async ({email, password}) => {
     console.error(error);
   }
 };
+
+export const createUser = async ({name, lastName, email, password}) => {
+  try {
+    const config = {
+      method: "POST",
+      url: protocol + host + "/api/users/",
+      data: {
+        name: name,
+        lastName: lastName,
+        email: email,
+        password: password,
+      },
+    };
+    
+    const response = await axios(config);
+    return response.data;
+  } catch (error) {
+    console.error("Error during login:", error.message);
+    console.error(error);
+  }
+};

@@ -5,18 +5,18 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Pressable,
 } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { logUser } from "./req/users";
+import { createUser } from "./req/users";
 
-export default function Index() {
+export default function SignUp() {
   const router = useRouter();
 
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -31,9 +31,26 @@ export default function Index() {
       <View style={styles.mainContainer}>
         <View>
           <ThemedText type="title">
-            <ThemedText type="subtitle">Log In</ThemedText>
+            <ThemedText type="subtitle">Sign Up</ThemedText>
           </ThemedText>
-          <ThemedText style={{ marginTop: 8 }}>Let's get started</ThemedText>
+        </View>
+        <View style={styles.inputBox}>
+          <Text style={styles.inputText}>Name</Text>
+          <TextInput
+            style={styles.input}
+            value={name}
+            placeholder="John"
+            onChangeText={(name) => setName(name)}
+          />
+        </View>
+        <View style={styles.inputBox}>
+          <Text style={styles.inputText}>Last Name</Text>
+          <TextInput
+            style={styles.input}
+            value={lastName}
+            placeholder="Doe"
+            onChangeText={(lastName) => setLastName(lastName)}
+          />
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputText}>Email</Text>
@@ -56,28 +73,21 @@ export default function Index() {
         <TouchableOpacity
           style={styles.button}
           onPress={async () => {
-            console.log(email, password);
-            const res = await logUser({ email, password });
-            if (res && res.accessToken) {
-              console.log("Login Successful");
-
-              await AsyncStorage.setItem("accessToken", res.accessToken);
-              console.log("Token saved successfully!");
-              router.navigate("/(tabs)");
+            const res = await createUser({name, lastName, email, password });
+            console.log(res);
+            if (res && res._id) {
+              console.log("Account Successfully Created");
+              router.back();
             } else {
               console.log("Login failed");
             }
           }}
         >
-          <Text style={styles.buttonText}>Log In</Text>
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
-        <Pressable onPress={() => {
-          router.navigate('/signup')
-        }}>
-          <Text style={styles.linkText}>
-            Don't have an account?, Register Here
-          </Text>
-        </Pressable>
+        <Text style={styles.linkText}>
+          Already have an account?, Log In Here
+        </Text>
       </View>
     </View>
   );
