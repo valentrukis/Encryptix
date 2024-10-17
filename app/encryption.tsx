@@ -3,7 +3,10 @@ import { ThemedText } from "@/components/ThemedText";
 import { Icon } from "@/components/Icon";
 import * as DocumentPicker from "expo-document-picker";
 
+import { useState } from "react";
+
 export default function Encryption() {
+  const [file, setFile] = useState({assets: null});
 
   return (
     <View>
@@ -28,27 +31,26 @@ export default function Encryption() {
           >
             To start, first select the file you want to encrypt:
           </ThemedText>
-          <TouchableOpacity style={styles.fileInput} onPress={ async () => {
-            try {
-              let file = await DocumentPicker.getDocumentAsync()
-
-              console.log(file)
-
-            } catch (error) {
-              console.log(error)
-            }
-          }}>
-            <Icon name="document-outline" />
-            <Text>{}</Text>
+          <TouchableOpacity
+            style={styles.fileInput}
+            onPress={async () => {
+              try {
+                setFile(await DocumentPicker.getDocumentAsync());
+                console.log(file);
+              } catch (error) {
+                console.log(error);
+              }
+            }}
+          >
+            <Icon name="document-outline" size={38} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {
-            
-          }}>
+          <TouchableOpacity
+            onPress={() => {
+              console.log(file);
+            }}
+          >
             <Text>Check File</Text>
           </TouchableOpacity>
-          {/* <View style={styles.fileInput}>
-            
-          </View> */}
         </View>
       </View>
     </View>

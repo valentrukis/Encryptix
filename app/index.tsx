@@ -42,6 +42,7 @@ export default function Index() {
             value={email}
             placeholder="email@example.com"
             onChangeText={(email) => setEmail(email)}
+            inputMode="email"
           />
         </View>
         <View style={styles.inputBox}>
@@ -51,12 +52,18 @@ export default function Index() {
             value={password}
             placeholder="********"
             onChangeText={(password) => setPassword(password)}
+            secureTextEntry
           />
         </View>
         <TouchableOpacity
           style={styles.button}
           onPress={async () => {
             console.log(email, password);
+
+            if(!email && !password) {
+              alert('Please fill the blank fields')
+            }
+
             const res = await logUser({ email, password });
             if (res && res.accessToken) {
               console.log("Login Successful");

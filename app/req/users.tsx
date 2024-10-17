@@ -16,8 +16,7 @@ export const logUser = async ({email, password}) => {
     const response = await axios(config);
     return response.data;
   } catch (error) {
-    console.error("Error during login:", error.message);
-    console.error(error);
+    console.log(error)
   }
 };
 

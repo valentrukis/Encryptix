@@ -27,9 +27,7 @@ export default function HomeScreen() {
           <TouchableOpacity
             style={styles.button}
             onPress={async () => {
-              // router.navigate("/encryption");
-              const token = await AsyncStorage.getItem("accessToken");
-              console.log("token: " + token);
+              router.navigate("/encryption");
             }}
           >
             <Text style={styles.buttonText}>Start Encrypting</Text>

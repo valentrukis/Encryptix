@@ -5,6 +5,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { useRouter } from "expo-router";
@@ -73,7 +74,7 @@ export default function SignUp() {
         <TouchableOpacity
           style={styles.button}
           onPress={async () => {
-            const res = await createUser({name, lastName, email, password });
+            const res = await createUser({ name, lastName, email, password });
             console.log(res);
             if (res && res._id) {
               console.log("Account Successfully Created");
@@ -85,9 +86,13 @@ export default function SignUp() {
         >
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
-        <Text style={styles.linkText}>
-          Already have an account?, Log In Here
-        </Text>
+        <Pressable onPress={() => {
+          router.navigate('/')
+        }} >
+          <Text style={styles.linkText}>
+            Already have an account?, Log In Here
+          </Text>
+        </Pressable>
       </View>
     </View>
   );

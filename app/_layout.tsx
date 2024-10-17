@@ -6,7 +6,18 @@ import {
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+// Screens
+import SignUp from "./signup";
+import Index from "./index";
+
+// App Screens
+import HomeScreen from "./(tabs)";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import {
@@ -20,6 +31,9 @@ import {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [userToken, setUserToken] = useState(null);
+
   const colorScheme = useColorScheme();
 
   const [loaded] = useFonts({
@@ -32,14 +46,36 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem("accessToken");
+        setUserToken(token);
+      } catch (error) {
+        console.error("Error reading token", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     if (loaded) {
       SplashScreen.hideAsync();
     }
+
+    checkToken();
   }, [loaded]);
 
   if (!loaded) {
     return null;
   }
+
+  const AuthStack = createStackNavigator();
+
+  const AuthStackScreen = () => {
+    <AuthStack.Navigator>
+      <AuthStack.Screen name="LogIn" component={Index} />
+      <AuthStack.Screen name="SignUp" component={SignUp} />
+    </AuthStack.Navigator>;
+  };
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
