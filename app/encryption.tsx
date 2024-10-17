@@ -12,6 +12,7 @@ import * as DocumentPicker from "expo-document-picker";
 import * as Crypto from "expo-crypto";
 import * as FileSystem from "expo-file-system";
 import { useState } from "react";
+import { useRouter } from "expo-router";
 
 // Encryption Function using expo-crypto
 const encryptFile = async (fileUri) => {
@@ -44,6 +45,7 @@ const encryptFile = async (fileUri) => {
 };
 
 export default function Encryption() {
+  const router = useRouter();
   const [file, setFile] = useState(null);
 
   const pickDocument = async () => {
@@ -112,6 +114,11 @@ export default function Encryption() {
         <View>
           <Pressable style={styles.button} onPress={handleEncrypt}>
             <Text style={styles.buttonText}>Encrypt</Text>
+          </Pressable>
+          <Pressable style={styles.button} onPress={() => {
+            router.navigate('/decryption')
+          }}>
+            <Text style={styles.buttonText}>Decrypt</Text>
           </Pressable>
         </View>
       </View>
