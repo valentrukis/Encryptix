@@ -70,6 +70,7 @@ export default function Encryption() {
       }
       console.log("Encrypting file with URI:", file.assets[0].uri);
       const encryptedFileUri = await encryptFile(file.assets[0].uri);
+      alert('File Successfully Encrypted')
       console.log("Encrypted file path:", encryptedFileUri);
     } catch (error) {
       console.log("Error during file encryption:", error);
@@ -105,19 +106,32 @@ export default function Encryption() {
         {/* Mostrar información del archivo seleccionado */}
         {file && (
           <View>
-            <Text>File Name: {file.assets[0].name}</Text>
-            <Text>File URI: {file.assets[0].uri}</Text>
+            <Text style={styles.text}>File Name: {file.assets[0].name}</Text>
+            <Text style={styles.text}>File URI: {file.assets[0].uri}</Text>
           </View>
         )}
 
         {/* Botón para encriptar el archivo */}
-        <View>
-          <Pressable style={styles.button} onPress={handleEncrypt}>
-            <Text style={styles.buttonText}>Encrypt</Text>
-          </Pressable>
-          <Pressable style={styles.button} onPress={() => {
-            router.navigate('/decryption')
-          }}>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <View>
+            <Pressable style={styles.button} onPress={handleEncrypt}>
+              <Text style={styles.buttonText}>Encrypt</Text>
+            </Pressable>
+            <Text>{}</Text>
+          </View>
+
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              console.log('File Decrypted: ' + file);
+            }}
+          >
             <Text style={styles.buttonText}>Decrypt</Text>
           </Pressable>
         </View>
@@ -144,6 +158,10 @@ const styles = StyleSheet.create({
   },
   fileInput: {
     marginVertical: 8,
+  },
+  text: {
+    fontSize: 16,
+    fontFamily: "Montserrat_400Regular",
   },
   button: {
     backgroundColor: "#629B52",
